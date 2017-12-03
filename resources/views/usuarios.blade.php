@@ -81,6 +81,14 @@
                 <div class="title m-b-md">
                     Usuários
                 </div>              
+
+                    <ul>
+                        @foreach ($usuarios as $usuario)
+                          <li>{{ $usuario->nome }}</li>
+                          <li>{{ $usuario->email }}</li>
+                          <li>{{ $usuario->senha }}</li>
+                        @endforeach
+                    </ul>
             </div>
         </div>
     </body>

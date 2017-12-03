@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Midia;
 
 class MidiaController extends Controller
 {
@@ -13,7 +14,7 @@ class MidiaController extends Controller
      */
     public function index()
     {
-        //
+        
     }
 
     /**
@@ -23,7 +24,14 @@ class MidiaController extends Controller
      */
     public function create()
     {
-        //
+         $midia = new Midia;
+
+        $midia->nomeMidia = Input::get('nomeMidia');
+        $midia->caminhoMidia = Input::get('caminhoMidia');
+        $midia->idPost = Input::get('idPost');
+        $midia->save();
+
+        return Redirect::back();
     }
 
     /**
@@ -66,7 +74,10 @@ class MidiaController extends Controller
      */
     public function update($id)
     {
-        //
+        $midia = Midia::find($id);
+        $midia->nomeMidia = $request->input('nomeMidia');
+        $midia->caminhoMidia = $request->input('caminhoMidia');
+        $midia->save();
     }
 
     /**
@@ -78,5 +89,10 @@ class MidiaController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function getAll(){
+        $midias = Midia::all();
+        return view('midias')->withMidias($midias);
     }
 }

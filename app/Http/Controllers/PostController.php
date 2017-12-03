@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Post;
 
 class PostController extends Controller
 {
@@ -13,7 +14,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        //
+        
     }
 
     /**
@@ -23,7 +24,17 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        $post = new Post;
+
+        $post->tituloPost = Input::get('tituloPost');
+        $post->textoPost = Input::get('textoPost');
+        $post->dataPost = Input::get('dataPost');
+        $post->atualizacaoPost = Input::get('atualizacaoPost');
+        $post->idCategoriaPost = Input::get('idCategoriaPost');
+        $post->idUsuario = Input::get('idUsuario');
+        $post->save();
+
+        return Redirect::back();
     }
 
     /**
@@ -66,7 +77,14 @@ class PostController extends Controller
      */
     public function update($id)
     {
-        //
+        $post = Post::find($id);
+        $post->tituloPost = $request->input('tituloPost');
+        $post->textoPost = $request->input('textoPost');
+        $post->dataPost = $request->input('dataPost');
+        $post->atualizacaoPost = $request->input('atualizacaoPost');
+        $post->idCategoriaPost = $request->input('idCategoriaPost');
+        $post->idUsuario = $request->input('idUsuario');
+        $post->save();
     }
 
     /**
@@ -78,5 +96,10 @@ class PostController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function getAll(){
+        $posts = Post::all();
+        return view('posts')->withPosts($posts);
     }
 }

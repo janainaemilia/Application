@@ -15,6 +15,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/usuarios', function () {
-    return view('usuarios');
-});
+Route::get('/usuarios', 'UsuarioController@getAll');
+Route::post('/posts/create', 'UsuarioController@create');
+Route::get('/posts/index', 'UsuarioController@index');
+Route::post('/posts/update', 'UsuarioController@update');
+Route::delete('/posts/delete', 'UsuarioController@delete');

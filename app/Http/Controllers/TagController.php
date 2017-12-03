@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Tag;
 
 class TagController extends Controller
 {
@@ -13,7 +14,7 @@ class TagController extends Controller
      */
     public function index()
     {
-        //
+        
     }
 
     /**
@@ -23,7 +24,12 @@ class TagController extends Controller
      */
     public function create()
     {
-        //
+        $tag = new Tag;
+
+        $tag->nomeTag = Input::get('nomeTag');
+        $tag->save();
+
+        return Redirect::back();
     }
 
     /**
@@ -66,7 +72,9 @@ class TagController extends Controller
      */
     public function update($id)
     {
-        //
+        $tag = Tag::find($id);
+        $tag->nomeTag = $request->input('nomeTag');
+        $tag->save();
     }
 
     /**
@@ -78,5 +86,10 @@ class TagController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function getAll(){
+        $tags = Tag::all();
+        return view('tags')->withTags($tags);
     }
 }

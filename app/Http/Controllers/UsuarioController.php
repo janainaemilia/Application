@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Usuario;
+use App\Usuario;
 
 class UsuarioController extends Controller
 {
@@ -14,7 +14,7 @@ class UsuarioController extends Controller
      */
     public function index()
     {
-        
+    	
     }
 
     /**
@@ -67,7 +67,11 @@ class UsuarioController extends Controller
      */
     public function update($id)
     {
-        //
+        $usuario = Usuario::find($id);
+        $usuario->nome = $request->input('nome');
+        $usuario->email = $request->input('email');
+        $usuario->senha = $request->input('senha');
+        $usuario->save();
     }
 
     /**
@@ -87,19 +91,7 @@ class UsuarioController extends Controller
      * @return Response
      */
     public function getAll(){
-    	$request = Request::create('http://localhost:3000/Usuarios', 'GET');
-
-    	$url = "http://localhost:3000/Usuarios";
-		$response = \Httpful\Request::get($url)
-		    ->expectsJson()
-		    ->withXTrivialHeader('Just as a demo')
-		    ->send();
-		 
-		 foreach ($variable as $key => $response->body) {		 	
-			 Usuario $usuario = new Usuario();
-			 $usuario->nome = $response->body->nome;
-			 $usuario->email = $response->body->email;
-			 $usuario->senha = $response->body->senha;
-		 }
+        $usuarios = Usuario::all();
+        return view('usuarios')->withUsuarios($usuarios);
     }
 }
